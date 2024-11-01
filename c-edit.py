@@ -1,5 +1,6 @@
 import os
 import logging
+import asyncio
 from telegram import Update, Document
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 from flask import Flask, request
@@ -12,8 +13,8 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 # Your Telegram Bot Token
-TOKEN = "7817448023:AAEnKpTuxfu8uz9hV-mJVjmqBvtBeDiauGQ"
-WEBHOOK_URL = "https://c-edit.onrender.com"
+TOKEN = os.getenv("TELEGRAM_TOKEN", "7817448023:AAEnKpTuxfu8uz9hV-mJVjmqBvtBeDiauGQ")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://c-edit.onrender.com")
 
 # Initialize the bot application
 bot_app = Application.builder().token(TOKEN).build()
@@ -103,16 +104,15 @@ bot_app.add_error_handler(error)
 # Flask route for webhook
 @app.route(f"/{TOKEN}", methods=["POST"])
 async def webhook() -> str:
-    """Process incoming updates from Telegram."""
     update = Update.de_json(request.get_json(force=True), bot_app.bot)
     await bot_app.process_update(update)
     return "ok"
 
-# Main function
+# Main function to set webhook
 async def set_webhook():
-    """Set the webhook URL for the bot."""
     await bot_app.bot.set_webhook(f"{WEBHOOK_URL}/{TOKEN}")
 
 if __name__ == '__main__':
-    bot_app.loop.run_until_complete(set_webhook())
+    # Set the webhook before running Flask app
+    asyncio.run(set_webhook())
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
