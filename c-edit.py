@@ -17,7 +17,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "Sᴇɴᴅ ʏᴏᴜʀ ᴄᴏᴍʙᴏ ғɪʟᴇ ɪɴ <code>.txt</code> ғᴏʀᴍᴀᴛ.\n\n"
         "<b>𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦:</b>\n"
         "/r_dupe - Rᴇᴍᴏᴠᴇ Dᴜᴘʟɪᴄᴀᴛᴇs\n"
-        "/r_cap - Rᴇᴍᴏᴠᴇ Cᴀᴘᴛᴜʀᴇ",
+        "/r_cap - Rᴇᴍᴏᴠᴇ Cᴀᴘᴛᴜʀᴇ\n\n"
+        "Bᴏᴛ Bʏ @bhainkar",
         parse_mode='HTML'
         )
 
